@@ -14,7 +14,6 @@ import {
   getMockLatestUpdates,
 } from './utils/mockData';
 import { CandleData, IndexData, StockData, NewsEvent, OverlayType } from './types';
-import { TrendingUp, TrendingDown } from 'lucide-react';
 
 function App() {
   // State
@@ -136,20 +135,22 @@ function App() {
               {candleData.length > 0 ? candleData[candleData.length - 1].close.toFixed(2) : '0.00'}
             </span>
           </div>
-          <div className="flex items-center gap-1">
-            {selectedStock.change >= 0 ? (
-              <TrendingUp className="w-4 h-4 text-tradingview-green" />
-            ) : (
-              <TrendingDown className="w-4 h-4 text-tradingview-red" />
-            )}
+          <div className="flex items-center gap-2">
             <span
               className={`text-sm font-medium ${
                 selectedStock.change >= 0 ? 'text-tradingview-green' : 'text-tradingview-red'
               }`}
             >
               {selectedStock.change >= 0 ? '+' : ''}
-              {selectedStock.change.toFixed(2)} ({selectedStock.changePercent >= 0 ? '+' : ''}
-              {selectedStock.changePercent.toFixed(2)}%)
+              {selectedStock.change.toFixed(2)}
+            </span>
+            <span
+              className={`text-sm font-medium ${
+                selectedStock.change >= 0 ? 'text-tradingview-green' : 'text-tradingview-red'
+              }`}
+            >
+              {selectedStock.changePercent >= 0 ? '+' : ''}
+              {selectedStock.changePercent.toFixed(2)}%
             </span>
           </div>
         </div>
@@ -175,20 +176,20 @@ function App() {
           />
 
           {/* Bottom Overlay Buttons */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-tradingview-panel border border-tradingview-border rounded-full px-4 py-2 shadow-lg">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 bg-tradingview-panel/90 backdrop-blur border border-tradingview-border rounded-full px-5 py-2.5 shadow-xl">
             <button
               onClick={(e) => handleOverlayButtonClick('earnings', e)}
-              className="w-2 h-2 rounded-full bg-blue-500 hover:bg-blue-400 cursor-pointer transition-all hover:scale-125"
+              className="w-2.5 h-2.5 rounded-full bg-blue-500 hover:bg-blue-400 cursor-pointer transition-all hover:scale-150 shadow-lg"
               title="Earnings & Revenue"
             />
             <button
               onClick={(e) => handleOverlayButtonClick('dividends', e)}
-              className="w-2 h-2 rounded-full bg-purple-500 hover:bg-purple-400 cursor-pointer transition-all hover:scale-125"
+              className="w-2.5 h-2.5 rounded-full bg-purple-500 hover:bg-purple-400 cursor-pointer transition-all hover:scale-150 shadow-lg"
               title="Dividends"
             />
             <button
               onClick={(e) => handleOverlayButtonClick('news', e)}
-              className="w-2 h-2 rounded-full bg-pink-500 hover:bg-pink-400 cursor-pointer transition-all hover:scale-125"
+              className="w-2.5 h-2.5 rounded-full bg-pink-500 hover:bg-pink-400 cursor-pointer transition-all hover:scale-150 shadow-lg"
               title="Latest Updates"
             />
           </div>
