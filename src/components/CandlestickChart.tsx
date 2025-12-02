@@ -44,25 +44,23 @@ export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickC
     });
 
     // Add candlestick series
-    const candleSeries = chart.addSeries({
-      type: 'Candlestick',
+    const candleSeries = (chart as any).addCandlestickSeries({
       upColor: '#26A69A',
       downColor: '#EF5350',
       borderUpColor: '#26A69A',
       borderDownColor: '#EF5350',
       wickUpColor: '#26A69A',
       wickDownColor: '#EF5350',
-    } as any);
+    });
 
     // Add volume series
-    const volumeSeries = chart.addSeries({
-      type: 'Histogram',
+    const volumeSeries = (chart as any).addHistogramSeries({
       color: '#26a69a',
       priceFormat: {
         type: 'volume',
       },
       priceScaleId: '',
-    } as any);
+    });
 
     volumeSeries.priceScale().applyOptions({
       scaleMargins: {
