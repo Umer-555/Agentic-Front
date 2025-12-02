@@ -1,4 +1,4 @@
-import { CandleData, StockData, IndexData, NewsEvent, EarningsData, DividendData } from '../types';
+import type { CandleData, StockData, IndexData, NewsEvent, EarningsData, DividendData } from '../types';
 
 // Generate initial historical candle data
 export const generateInitialCandles = (count: number, basePrice: number = 177): CandleData[] => {

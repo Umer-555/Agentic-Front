@@ -1,4 +1,4 @@
-import { StockData, IndexData } from '../types';
+import type { StockData, IndexData } from '../types';
 
 interface RightSidebarProps {
   indices: IndexData[];

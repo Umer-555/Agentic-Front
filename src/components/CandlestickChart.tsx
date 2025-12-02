@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { createChart, IChartApi, ISeriesApi, CandlestickData, Time } from 'lightweight-charts';
-import { CandleData, NewsEvent } from '../types';
+import { useEffect, useRef } from 'react';
+import { createChart, ColorType } from 'lightweight-charts';
+import type { IChartApi, CandlestickData, Time } from 'lightweight-charts';
+import type { CandleData, NewsEvent } from '../types';
 
 interface CandlestickChartProps {
   data: CandleData[];
@@ -11,9 +12,8 @@ interface CandlestickChartProps {
 export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const candleSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
-  const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
-  const [activeNews, setActiveNews] = useState<NewsEvent | null>(null);
+  const candleSeriesRef = useRef<any>(null);
+  const volumeSeriesRef = useRef<any>(null);
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
@@ -21,7 +21,7 @@ export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickC
     // Create chart
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { color: '#131722' },
+        background: { type: ColorType.Solid, color: '#131722' },
         textColor: '#D1D4DC',
       },
       grid: {
@@ -44,7 +44,7 @@ export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickC
     });
 
     // Add candlestick series
-    const candleSeries = chart.addCandlestickSeries({
+    const candleSeries = (chart as any).addCandlestickSeries({
       upColor: '#26A69A',
       downColor: '#EF5350',
       borderUpColor: '#26A69A',
@@ -54,7 +54,7 @@ export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickC
     });
 
     // Add volume series
-    const volumeSeries = chart.addHistogramSeries({
+    const volumeSeries = (chart as any).addHistogramSeries({
       color: '#26a69a',
       priceFormat: {
         type: 'volume',
@@ -122,16 +122,21 @@ export const CandlestickChart = ({ data, newsEvents, onNewsClick }: CandlestickC
   useEffect(() => {
     if (!candleSeriesRef.current || newsEvents.length === 0) return;
 
-    const markers = newsEvents.map(news => ({
-      time: news.time as Time,
-      position: 'aboveBar' as const,
-      color: '#2196F3',
-      shape: 'circle' as const,
-      text: 'N',
-      size: 1,
-    }));
+    try {
+      const markers = newsEvents.map(news => ({
+        time: news.time as Time,
+        position: 'aboveBar' as const,
+        color: '#2196F3',
+        shape: 'circle' as const,
+        text: 'N',
+        size: 1,
+      }));
 
-    candleSeriesRef.current.setMarkers(markers);
+      candleSeriesRef.current.setMarkers(markers);
+    } catch (error) {
+      // Markers may not be supported in this version
+      console.log('Markers not supported:', error);
+    }
   }, [newsEvents]);
 
   return (

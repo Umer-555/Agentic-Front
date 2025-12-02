@@ -13,7 +13,7 @@ import {
   getMockDividendData,
   getMockLatestUpdates,
 } from './utils/mockData';
-import { CandleData, IndexData, StockData, NewsEvent, OverlayType } from './types';
+import type { CandleData, IndexData, StockData, NewsEvent, OverlayType } from './types';
 
 function App() {
   // State
@@ -68,7 +68,7 @@ function App() {
   }, [selectedStock]);
 
   // Handle news click
-  const handleNewsClick = useCallback((news: NewsEvent, position: { x: number; y: number }) => {
+  const handleNewsClick = useCallback((_news: NewsEvent, position: { x: number; y: number }) => {
     setActiveOverlay({ type: 'news', position });
     setOverlayPosition(position);
   }, []);

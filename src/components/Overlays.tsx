@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { EarningsData, DividendData } from '../types';
+import type { EarningsData, DividendData } from '../types';
 
 interface EarningsOverlayProps {
   data: EarningsData;
